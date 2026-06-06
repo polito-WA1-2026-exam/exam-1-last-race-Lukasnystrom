@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS stations (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL UNIQUE,
-  x_coord REAL NOT NULL,
-  y_coord REAL NOT NULL
+  map_x REAL NOT NULL,
+  map_y REAL NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS lines (
@@ -35,15 +35,15 @@ CREATE TABLE IF NOT EXISTS line_stations (
 CREATE TABLE IF NOT EXISTS segments (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   line_id INTEGER NOT NULL,
-  station_a INTEGER NOT NULL,
-  station_b INTEGER NOT NULL,
+  station_a_id INTEGER NOT NULL,
+  station_b_id INTEGER NOT NULL,
   segment_order INTEGER NOT NULL,
-  CHECK (station_a <> station_b),
-  UNIQUE (line_id, station_a, station_b),
+  CHECK (station_a_id <> station_b_id),
+  UNIQUE (line_id, station_a_id, station_b_id),
   UNIQUE (line_id, segment_order),
   FOREIGN KEY (line_id) REFERENCES lines(id) ON DELETE CASCADE,
-  FOREIGN KEY (station_a) REFERENCES stations(id) ON DELETE CASCADE,
-  FOREIGN KEY (station_b) REFERENCES stations(id) ON DELETE CASCADE
+  FOREIGN KEY (station_a_id) REFERENCES stations(id) ON DELETE CASCADE,
+  FOREIGN KEY (station_b_id) REFERENCES stations(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS events (
