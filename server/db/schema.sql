@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS events (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   description TEXT NOT NULL UNIQUE,
   coin_effect INTEGER NOT NULL,
+  weight INTEGER NOT NULL DEFAULT 1 CHECK (weight > 0),
   CHECK (coin_effect BETWEEN -4 AND 4)
 );
 

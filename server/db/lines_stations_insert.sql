@@ -10,16 +10,17 @@ INSERT INTO stations (name, map_x, map_y) VALUES
   ('Djursholm', 63, 18),
   ('Taby', 55, 8),
   ('Bergshamra', 46, 28),
-  ('Liningo', 82, 34),
+  ('Lidingo', 82, 34),
   ('Nacka', 76, 64),
   ('Gardet', 66, 42),
   ('Hammarby', 57, 70),
   ('Solna', 35, 32),
   ('Sergels torg', 48, 48),
   ('Kungsholmen', 34, 50),
-  ('Djurgorden', 68, 54),
+  ('Djurgarden', 68, 54),
   ('Haninge', 62, 90),
   ('Bro Hof', 12, 22)
 ON CONFLICT(name) DO UPDATE SET
+
   map_x = excluded.map_x,
   map_y = excluded.map_y;
