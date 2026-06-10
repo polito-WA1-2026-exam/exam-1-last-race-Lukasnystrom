@@ -1,11 +1,9 @@
-// imports
-import express from "express";
+import app from "./app.js";
 
-// init express
-const app = new express();
-const port = 3001;
+const port = Number(process.env.PORT) || 3001;
+const clientOrigin = process.env.CLIENT_ORIGIN ?? "http://localhost:5173";
 
-// activate the server
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
+  console.log(`Accepting browser requests from ${clientOrigin}`);
 });
