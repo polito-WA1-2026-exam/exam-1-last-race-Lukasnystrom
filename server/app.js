@@ -3,6 +3,7 @@ import session from "express-session";
 
 import passport from "./auth/passport.js";
 import authRouter from "./routes/auth-routes.js";
+import networkRouter from "./routes/network-routes.js";
 
 const clientOrigin = process.env.CLIENT_ORIGIN ?? "http://localhost:5173";
 const sessionSecret =
@@ -85,6 +86,7 @@ app.get("/api/health", (req, res) => {
   });
 });
 app.use("/api/sessions", authRouter);
+app.use("/api/network", networkRouter);
 
 app.use(jsonSyntaxErrorHandler);
 app.use("/api", notFoundHandler);
