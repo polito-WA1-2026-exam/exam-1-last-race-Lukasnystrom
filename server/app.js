@@ -1,6 +1,12 @@
 import express from "express";
+import session from "express-session";
+
+import passport from "./auth/passport.js";
+import authRouter from "./routes/auth-routes.js";
 
 const clientOrigin = process.env.CLIENT_ORIGIN ?? "http://localhost:5173";
+const sessionSecret =
+  process.env.SESSION_SECRET ?? "last-race-dev-session-secret";
 
 function corsMiddleware(req, res, next) {
   const requestOrigin = req.get("Origin");
@@ -54,13 +60,31 @@ app.disable("x-powered-by");
 
 app.use(corsMiddleware);
 app.use(express.json());
+app.use(
+  session({
+    name: "last-race.sid",
+    secret: sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 1000 * 60 * 60,
+      secure: process.env.NODE_ENV === "production",
+    },
+  }),
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get("/api/health", (req, res) => {
   return res.json({
     status: "ok",
     message: "Last Race API is running.",
+    session: "enabled",
   });
 });
+app.use("/api/sessions", authRouter);
 
 app.use(jsonSyntaxErrorHandler);
 app.use("/api", notFoundHandler);
