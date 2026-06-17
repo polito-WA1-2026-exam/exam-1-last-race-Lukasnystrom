@@ -16,11 +16,11 @@ WITH route_stations(line_name, station_name, station_order) AS (
     ('Yellow', 'Sergels torg', 4),
 
     ('Red', 'Bergshamra', 1),
-    ('Red', 'Djurgorden', 2),
+    ('Red', 'Djurgarden', 2),
     ('Red', 'Nacka', 3),
     ('Red', 'Hammarby', 4),
 
-    ('Blue', 'Liningo', 1),
+    ('Blue', 'Lidingo', 1),
     ('Blue', 'Gardet', 2),
     ('Blue', 'Sergels torg', 3),
     ('Blue', 'Hammarby', 4),
@@ -42,11 +42,11 @@ WITH route_segments(line_name, station_a_name, station_b_name, segment_order) AS
     ('Yellow', 'Djursholm', 'Bergshamra', 2),
     ('Yellow', 'Bergshamra', 'Sergels torg', 3),
 
-    ('Red', 'Bergshamra', 'Djurgorden', 1),
-    ('Red', 'Djurgorden', 'Nacka', 2),
+    ('Red', 'Bergshamra', 'Djurgarden', 1),
+    ('Red', 'Djurgarden', 'Nacka', 2),
     ('Red', 'Nacka', 'Hammarby', 3),
 
-    ('Blue', 'Liningo', 'Gardet', 1),
+    ('Blue', 'Lidingo', 'Gardet', 1),
     ('Blue', 'Gardet', 'Sergels torg', 2),
     ('Blue', 'Sergels torg', 'Hammarby', 3),
     ('Blue', 'Hammarby', 'Haninge', 4)
