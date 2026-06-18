@@ -8,6 +8,7 @@ import {
   startGame,
   submitGame,
 } from "./api";
+import stockholmMap from "./assets/large-detailed-road-map-of-stockholm-city-with-buildings.jpg";
 import "./App.css";
 
 const EMPTY_LOGIN_FORM = {
@@ -17,18 +18,18 @@ const EMPTY_LOGIN_FORM = {
 
 const STATION_LABEL_LAYOUT = {
   "Bro Hof": { dx: 0, dy: -4.2, anchor: "middle" },
-  Solna: { dx: -3.2, dy: -3.8, anchor: "end" },
-  Kungsholmen: { dx: -3.4, dy: 4.2, anchor: "end" },
-  "Sergels torg": { dx: 0, dy: 5.4, anchor: "middle" },
-  Taby: { dx: -1.4, dy: -3.6, anchor: "end" },
-  Djursholm: { dx: 2.8, dy: -3.8, anchor: "start" },
-  Bergshamra: { dx: -3.4, dy: -3.2, anchor: "end" },
-  Lidingo: { dx: -2.8, dy: -3.6, anchor: "end" },
-  Gardet: { dx: 3.2, dy: -2.8, anchor: "start" },
-  Djurgarden: { dx: 3.2, dy: 4.2, anchor: "start" },
-  Nacka: { dx: -2.8, dy: -3, anchor: "end" },
-  Hammarby: { dx: -2.8, dy: 4.8, anchor: "end" },
-  Haninge: { dx: -3, dy: -3.2, anchor: "end" },
+  Solna: { dx: -3.4, dy: -3.8, anchor: "end" },
+  Kungsholmen: { dx: -3.6, dy: 4.6, anchor: "end" },
+  "Sergels torg": { dx: 0, dy: -4.2, anchor: "middle" },
+  Taby: { dx: -1.8, dy: -3.8, anchor: "end" },
+  Djursholm: { dx: 3.1, dy: -3.8, anchor: "start" },
+  Bergshamra: { dx: -3.6, dy: -3.2, anchor: "end" },
+  Lidingo: { dx: 2.8, dy: 4.4, anchor: "start" },
+  Gardet: { dx: 3.1, dy: -2.9, anchor: "start" },
+  Djurgarden: { dx: 3.2, dy: 5, anchor: "start" },
+  Nacka: { dx: 3.1, dy: 4.6, anchor: "start" },
+  Hammarby: { dx: 3.2, dy: 4.8, anchor: "start" },
+  Haninge: { dx: 3.2, dy: -3, anchor: "start" },
 };
 
 function formatCountdown(timeLeftMs) {
@@ -72,7 +73,16 @@ function NetworkMap({
             : "Memory map showing only station names"
         }
       >
-        <rect className="network-map__board" x="0" y="0" width="100" height="100" />
+        <image
+          className="network-map__image"
+          href={stockholmMap}
+          x="0"
+          y="0"
+          width="100"
+          height="100"
+          preserveAspectRatio="xMidYMid slice"
+        />
+        <rect className="network-map__tint" x="0" y="0" width="100" height="100" />
         {revealLines
           ? network.segments.map((segment) => {
               const stationA = findStation(network, segment.stationAId);

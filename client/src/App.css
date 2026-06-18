@@ -313,38 +313,29 @@ p {
   width: 100%;
   aspect-ratio: 1.25;
   border: 1px solid rgba(168, 131, 255, 0.18);
-  background:
-    linear-gradient(180deg, rgba(12, 9, 21, 0.96), rgba(20, 14, 35, 0.98)),
-    linear-gradient(
-      90deg,
-      rgba(168, 131, 255, 0.05) 0,
-      rgba(168, 131, 255, 0.05) 1px,
-      transparent 1px,
-      transparent 12px
-    ),
-    linear-gradient(
-      0deg,
-      rgba(168, 131, 255, 0.05) 0,
-      rgba(168, 131, 255, 0.05) 1px,
-      transparent 1px,
-      transparent 12px
-    );
+  background: rgba(8, 6, 16, 0.98);
 }
 
-.network-map__board {
-  fill: rgba(15, 11, 25, 0.98);
+.network-map__image {
+  opacity: 0.82;
+}
+
+.network-map__tint {
+  fill: rgba(20, 11, 38, 0.36);
 }
 
 .network-map__segment {
-  stroke-width: 1.65;
+  stroke-width: 1.85;
   stroke-linecap: square;
+  stroke-linejoin: miter;
   opacity: 0.96;
+  filter: drop-shadow(0 0 0.35px rgba(6, 4, 10, 0.9));
 }
 
 .network-map__station {
   fill: #f4eeff;
-  stroke: #0b0813;
-  stroke-width: 0.55;
+  stroke: #08060d;
+  stroke-width: 0.65;
 }
 
 .network-map__station--interchange {
@@ -354,7 +345,7 @@ p {
 
 .network-map__marker {
   fill: none;
-  stroke-width: 0.65;
+  stroke-width: 0.8;
 }
 
 .network-map__marker--start {
@@ -367,11 +358,11 @@ p {
 
 .network-map__label {
   fill: var(--text);
-  font-size: 2.75px;
+  font-size: 2.55px;
   font-weight: 700;
   paint-order: stroke;
   stroke: rgba(8, 6, 16, 0.96);
-  stroke-width: 1px;
+  stroke-width: 1.15px;
   letter-spacing: 0.03px;
 }
 
