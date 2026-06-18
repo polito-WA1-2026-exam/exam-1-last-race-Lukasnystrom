@@ -15,6 +15,22 @@ const EMPTY_LOGIN_FORM = {
   password: "",
 };
 
+const STATION_LABEL_LAYOUT = {
+  "Bro Hof": { dx: 0, dy: -4.2, anchor: "middle" },
+  Solna: { dx: -3.2, dy: -3.8, anchor: "end" },
+  Kungsholmen: { dx: -3.4, dy: 4.2, anchor: "end" },
+  "Sergels torg": { dx: 0, dy: 5.4, anchor: "middle" },
+  Taby: { dx: -1.4, dy: -3.6, anchor: "end" },
+  Djursholm: { dx: 2.8, dy: -3.8, anchor: "start" },
+  Bergshamra: { dx: -3.4, dy: -3.2, anchor: "end" },
+  Lidingo: { dx: -2.8, dy: -3.6, anchor: "end" },
+  Gardet: { dx: 3.2, dy: -2.8, anchor: "start" },
+  Djurgarden: { dx: 3.2, dy: 4.2, anchor: "start" },
+  Nacka: { dx: -2.8, dy: -3, anchor: "end" },
+  Hammarby: { dx: -2.8, dy: 4.8, anchor: "end" },
+  Haninge: { dx: -3, dy: -3.2, anchor: "end" },
+};
+
 function formatCountdown(timeLeftMs) {
   const totalSeconds = Math.max(0, Math.ceil(timeLeftMs / 1000));
   const minutes = Math.floor(totalSeconds / 60)
@@ -84,7 +100,11 @@ function NetworkMap({
         {network.stations.map((station) => {
           const isStart = station.id === startStationId;
           const isDestination = station.id === destinationStationId;
-          const labelOnRight = station.mapX <= 65;
+          const labelLayout = STATION_LABEL_LAYOUT[station.name] ?? {
+            dx: station.mapX <= 65 ? 2.8 : -2.8,
+            dy: -3,
+            anchor: station.mapX <= 65 ? "start" : "end",
+          };
 
           return (
             <g key={station.id}>
@@ -112,9 +132,9 @@ function NetworkMap({
               />
               <text
                 className="network-map__label"
-                x={station.mapX + (labelOnRight ? 2.4 : -2.4)}
-                y={station.mapY - 2.2}
-                textAnchor={labelOnRight ? "start" : "end"}
+                x={station.mapX + labelLayout.dx}
+                y={station.mapY + labelLayout.dy}
+                textAnchor={labelLayout.anchor}
               >
                 {station.name}
               </text>

@@ -1,14 +1,59 @@
+:root {
+  --bg-shell: rgba(10, 7, 18, 0.92);
+  --bg-panel: rgba(20, 14, 34, 0.96);
+  --bg-panel-alt: rgba(29, 20, 48, 0.94);
+  --bg-chip: rgba(38, 27, 63, 0.92);
+  --bg-chip-soft: rgba(76, 58, 118, 0.24);
+  --bg-input: rgba(15, 11, 26, 0.96);
+  --bg-map: rgba(14, 10, 24, 0.98);
+  --border: rgba(145, 118, 214, 0.34);
+  --border-strong: rgba(168, 131, 255, 0.68);
+  --text: #f4eeff;
+  --text-muted: #b8abd7;
+  --text-dim: #8d7ead;
+  --accent: #8b5cf6;
+  --accent-strong: #b58cff;
+  --accent-soft: rgba(139, 92, 246, 0.16);
+  --cyan: #59c7ff;
+  --danger: #ff6ea8;
+  --danger-soft: rgba(255, 110, 168, 0.16);
+  --success: #6bf1c0;
+  --success-soft: rgba(107, 241, 192, 0.14);
+  --shadow: 0 28px 90px rgba(0, 0, 0, 0.42);
+}
+
+.app-shell,
+.loading-panel,
+.status-banner,
+.panel,
+.phase-strip > div,
+.bullet-grid > div,
+.auth-form input,
+.button,
+.network-map svg,
+.network-legend__item,
+.route-pill,
+.timer-card,
+.segment-chip,
+.route-list li,
+.empty-state,
+.event-card,
+.impact,
+.execution-log__item,
+.result-events__item,
+.route-list__index {
+  border-radius: 0;
+}
+
 .app-shell {
-  width: min(1400px, calc(100vw - 40px));
+  width: min(1440px, calc(100vw - 40px));
   margin: 20px auto;
   padding: 24px;
-  border: 1px solid rgba(24, 33, 44, 0.12);
-  border-radius: 28px;
-  background: rgba(255, 251, 245, 0.82);
-  box-shadow:
-    0 24px 80px rgba(24, 33, 44, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(18px);
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, rgba(11, 8, 20, 0.94), rgba(8, 6, 16, 0.98)),
+    linear-gradient(135deg, rgba(139, 92, 246, 0.08), transparent 45%);
+  box-shadow: var(--shadow);
 }
 
 .app-shell--loading {
@@ -20,9 +65,9 @@
 .loading-panel {
   width: min(520px, 100%);
   padding: 48px;
-  border-radius: 28px;
-  background: rgba(255, 251, 245, 0.88);
-  box-shadow: 0 24px 80px rgba(24, 33, 44, 0.14);
+  border: 1px solid var(--border);
+  background: var(--bg-panel);
+  box-shadow: var(--shadow);
 }
 
 .topbar {
@@ -44,7 +89,7 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  color: #52606b;
+  color: var(--text-muted);
   font-size: 0.92rem;
 }
 
@@ -53,13 +98,14 @@
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   font-size: clamp(2rem, 2.2vw, 2.6rem);
   letter-spacing: -0.04em;
+  color: var(--text);
 }
 
 .eyebrow {
   margin: 0 0 8px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: #8f5a2a;
+  color: var(--accent-strong);
   font-size: 0.72rem;
   font-weight: 700;
 }
@@ -68,7 +114,7 @@ h1,
 h2 {
   margin: 0;
   font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  color: #13202d;
+  color: var(--text);
   letter-spacing: -0.03em;
 }
 
@@ -88,7 +134,7 @@ p {
 
 .hero-copy,
 .muted {
-  color: #52606b;
+  color: var(--text-muted);
 }
 
 .hero-copy {
@@ -98,20 +144,20 @@ p {
 .status-banner {
   margin-bottom: 16px;
   padding: 14px 16px;
-  border-radius: 18px;
   font-weight: 600;
+  border: 1px solid transparent;
 }
 
 .status-banner--error {
-  background: rgba(215, 38, 56, 0.1);
-  color: #8e1a27;
-  border: 1px solid rgba(215, 38, 56, 0.18);
+  background: var(--danger-soft);
+  color: #ffc7da;
+  border-color: rgba(255, 110, 168, 0.32);
 }
 
 .status-banner--info {
-  background: rgba(47, 128, 237, 0.1);
-  color: #1f4f95;
-  border: 1px solid rgba(47, 128, 237, 0.18);
+  background: rgba(89, 199, 255, 0.12);
+  color: #bfeaff;
+  border-color: rgba(89, 199, 255, 0.28);
 }
 
 .screen {
@@ -135,12 +181,11 @@ p {
 }
 
 .panel {
-  border-radius: 24px;
   padding: 24px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(250, 244, 234, 0.9));
-  border: 1px solid rgba(24, 33, 44, 0.08);
-  box-shadow: 0 14px 40px rgba(24, 33, 44, 0.08);
+    linear-gradient(180deg, rgba(28, 20, 47, 0.96), rgba(17, 13, 29, 0.98));
+  border: 1px solid var(--border);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
 }
 
 .panel--hero,
@@ -176,8 +221,8 @@ p {
 .phase-strip > div,
 .bullet-grid > div {
   padding: 16px;
-  border-radius: 18px;
-  background: rgba(24, 33, 44, 0.045);
+  background: var(--bg-chip-soft);
+  border: 1px solid rgba(168, 131, 255, 0.1);
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -185,7 +230,7 @@ p {
 
 .phase-strip span,
 .bullet-grid span {
-  color: #52606b;
+  color: var(--text-muted);
 }
 
 .auth-form {
@@ -197,21 +242,20 @@ p {
   display: grid;
   gap: 8px;
   font-weight: 600;
-  color: #25313c;
+  color: var(--text);
 }
 
 .auth-form input {
   width: 100%;
   padding: 13px 14px;
-  border-radius: 14px;
-  border: 1px solid rgba(24, 33, 44, 0.16);
-  background: rgba(255, 255, 255, 0.88);
-  color: #18212c;
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  color: var(--text);
 }
 
 .auth-form input:focus-visible {
-  outline: 2px solid rgba(47, 128, 237, 0.32);
-  border-color: rgba(47, 128, 237, 0.5);
+  outline: 2px solid rgba(139, 92, 246, 0.34);
+  border-color: var(--border-strong);
 }
 
 .button {
@@ -221,13 +265,13 @@ p {
   gap: 8px;
   min-height: 48px;
   padding: 0 18px;
-  border: none;
-  border-radius: 999px;
+  border: 1px solid transparent;
   font-weight: 700;
   transition:
     transform 160ms ease,
-    box-shadow 160ms ease,
-    background-color 160ms ease;
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .button:disabled {
@@ -242,14 +286,16 @@ p {
 }
 
 .button--primary {
-  background: linear-gradient(135deg, #d72638, #8b1d3a);
-  color: #fff9f3;
-  box-shadow: 0 12px 24px rgba(139, 29, 58, 0.24);
+  background: linear-gradient(135deg, var(--accent), #5b35bf);
+  color: #fdfaff;
+  border-color: rgba(211, 193, 255, 0.18);
+  box-shadow: 0 12px 30px rgba(91, 53, 191, 0.32);
 }
 
 .button--ghost {
-  background: rgba(24, 33, 44, 0.06);
-  color: #18212c;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+  border-color: var(--border);
 }
 
 .button--compact {
@@ -266,54 +312,71 @@ p {
 .network-map svg {
   width: 100%;
   aspect-ratio: 1.25;
-  border-radius: 24px;
+  border: 1px solid rgba(168, 131, 255, 0.18);
   background:
-    linear-gradient(180deg, rgba(12, 20, 28, 0.04), rgba(12, 20, 28, 0.01)),
-    radial-gradient(circle at 10% 10%, rgba(47, 128, 237, 0.08), transparent 24%);
+    linear-gradient(180deg, rgba(12, 9, 21, 0.96), rgba(20, 14, 35, 0.98)),
+    linear-gradient(
+      90deg,
+      rgba(168, 131, 255, 0.05) 0,
+      rgba(168, 131, 255, 0.05) 1px,
+      transparent 1px,
+      transparent 12px
+    ),
+    linear-gradient(
+      0deg,
+      rgba(168, 131, 255, 0.05) 0,
+      rgba(168, 131, 255, 0.05) 1px,
+      transparent 1px,
+      transparent 12px
+    );
 }
 
 .network-map__board {
-  fill: rgba(247, 241, 232, 0.96);
+  fill: rgba(15, 11, 25, 0.98);
 }
 
 .network-map__segment {
-  stroke-width: 1.45;
-  stroke-linecap: round;
-  opacity: 0.95;
+  stroke-width: 1.65;
+  stroke-linecap: square;
+  opacity: 0.96;
 }
 
 .network-map__station {
-  fill: #fffefc;
-  stroke: #18212c;
-  stroke-width: 0.5;
+  fill: #f4eeff;
+  stroke: #0b0813;
+  stroke-width: 0.55;
 }
 
 .network-map__station--interchange {
-  fill: #18212c;
-  stroke: #fffefc;
+  fill: var(--accent-strong);
+  stroke: #f4eeff;
 }
 
 .network-map__marker {
   fill: none;
-  stroke-width: 0.6;
+  stroke-width: 0.65;
 }
 
 .network-map__marker--start {
-  stroke: #d72638;
+  stroke: var(--accent-strong);
 }
 
 .network-map__marker--destination {
-  stroke: #2f80ed;
+  stroke: var(--cyan);
 }
 
 .network-map__label {
-  fill: #16212d;
-  font-size: 2.8px;
+  fill: var(--text);
+  font-size: 2.75px;
   font-weight: 700;
+  paint-order: stroke;
+  stroke: rgba(8, 6, 16, 0.96);
+  stroke-width: 1px;
+  letter-spacing: 0.03px;
 }
 
 .network-map__caption {
-  color: #52606b;
+  color: var(--text-muted);
 }
 
 .network-legend {
@@ -327,16 +390,15 @@ p {
   align-items: center;
   gap: 8px;
   padding: 10px 12px;
-  border-radius: 999px;
-  background: rgba(24, 33, 44, 0.06);
-  color: #25313c;
+  background: rgba(139, 92, 246, 0.1);
+  color: var(--text);
+  border: 1px solid rgba(168, 131, 255, 0.18);
   font-weight: 600;
 }
 
 .network-legend__swatch {
   width: 12px;
   height: 12px;
-  border-radius: 999px;
 }
 
 .planning-topbar,
@@ -350,16 +412,16 @@ p {
 .timer-card {
   flex: 1 1 200px;
   padding: 18px 20px;
-  border-radius: 22px;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  border: 1px solid rgba(24, 33, 44, 0.08);
+  border: 1px solid var(--border);
+  background: var(--bg-panel-alt);
 }
 
 .route-pill span,
 .timer-card span {
-  color: #52606b;
+  color: var(--text-dim);
   font-size: 0.88rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -368,18 +430,21 @@ p {
 .route-pill strong,
 .timer-card strong {
   font-size: 1.3rem;
+  color: var(--text);
 }
 
 .route-pill--start {
-  background: rgba(215, 38, 56, 0.08);
+  border-color: rgba(181, 140, 255, 0.42);
+  background: rgba(139, 92, 246, 0.12);
 }
 
 .route-pill--destination {
-  background: rgba(47, 128, 237, 0.08);
+  border-color: rgba(89, 199, 255, 0.38);
+  background: rgba(89, 199, 255, 0.08);
 }
 
 .timer-card {
-  background: rgba(24, 33, 44, 0.06);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .planning-columns {
@@ -397,23 +462,27 @@ p {
 .segment-chip {
   text-align: left;
   padding: 16px;
-  border-radius: 18px;
-  border: 1px solid rgba(24, 33, 44, 0.1);
-  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(168, 131, 255, 0.18);
+  background: var(--bg-chip);
   display: flex;
   flex-direction: column;
   gap: 8px;
-  color: #18212c;
+  color: var(--text);
+}
+
+.segment-chip:not(:disabled):hover {
+  border-color: var(--border-strong);
+  background: rgba(63, 44, 104, 0.96);
 }
 
 .segment-chip small {
-  color: #6b7782;
+  color: var(--text-dim);
   font-weight: 700;
 }
 
 .segment-chip--used {
-  background: rgba(24, 33, 44, 0.07);
-  color: #52606b;
+  background: rgba(22, 16, 36, 0.98);
+  color: var(--text-dim);
 }
 
 .route-list {
@@ -431,8 +500,8 @@ p {
   align-items: center;
   gap: 14px;
   padding: 14px;
-  border-radius: 18px;
-  background: rgba(24, 33, 44, 0.045);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(168, 131, 255, 0.12);
 }
 
 .route-list--static li {
@@ -442,11 +511,10 @@ p {
 .route-list__index {
   width: 38px;
   height: 38px;
-  border-radius: 999px;
   display: grid;
   place-items: center;
-  background: #18212c;
-  color: #fff8ef;
+  background: linear-gradient(135deg, var(--accent), #5b35bf);
+  color: #fbf8ff;
   font-weight: 700;
 }
 
@@ -456,19 +524,19 @@ p {
 
 .empty-state {
   padding: 22px;
-  border-radius: 20px;
-  background: rgba(24, 33, 44, 0.045);
-  color: #52606b;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(168, 131, 255, 0.14);
+  color: var(--text-muted);
   display: grid;
   gap: 6px;
 }
 
 .event-card {
   padding: 22px;
-  border-radius: 22px;
   background:
-    linear-gradient(135deg, rgba(24, 33, 44, 0.95), rgba(46, 67, 89, 0.88));
-  color: #fdf8f1;
+    linear-gradient(135deg, rgba(31, 20, 56, 0.98), rgba(17, 12, 31, 1));
+  border: 1px solid rgba(181, 140, 255, 0.24);
+  color: #fdf8ff;
   display: grid;
   gap: 18px;
 }
@@ -481,7 +549,7 @@ p {
 }
 
 .event-card__route span {
-  color: rgba(253, 248, 241, 0.74);
+  color: #cdbdf5;
 }
 
 .event-card__description {
@@ -500,17 +568,18 @@ p {
 .impact {
   display: inline-flex;
   padding: 8px 12px;
-  border-radius: 999px;
 }
 
 .impact--gain {
-  background: rgba(72, 201, 176, 0.16);
-  color: #8ef3d2;
+  background: var(--success-soft);
+  color: var(--success);
+  border: 1px solid rgba(107, 241, 192, 0.28);
 }
 
 .impact--loss {
-  background: rgba(255, 130, 130, 0.16);
-  color: #ffb9b9;
+  background: var(--danger-soft);
+  color: #ffbfd6;
+  border: 1px solid rgba(255, 110, 168, 0.28);
 }
 
 .execution-log,
@@ -522,8 +591,8 @@ p {
 .execution-log__item,
 .result-events__item {
   padding: 14px 16px;
-  border-radius: 18px;
-  background: rgba(24, 33, 44, 0.045);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(168, 131, 255, 0.12);
   display: grid;
   gap: 4px;
 }
@@ -531,7 +600,7 @@ p {
 .execution-log__item span,
 .result-events__item span,
 .result-events__item small {
-  color: #52606b;
+  color: var(--text-muted);
 }
 
 @media (max-width: 1100px) {
@@ -546,7 +615,7 @@ p {
 
 @media (max-width: 900px) {
   .app-shell {
-    width: min(100vw - 24px, 1400px);
+    width: min(100vw - 24px, 1440px);
     margin: 12px auto;
     padding: 18px;
   }

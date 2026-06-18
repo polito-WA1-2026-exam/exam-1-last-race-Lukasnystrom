@@ -40,8 +40,14 @@
 
 ## Users Credentials
 
-- username, password (plus any other requested info)
-- username, password (plus any other requested info)
+- `mona.beck`, `lastrace123`
+- `zibra.karling`, `lastrace123`
+- `alfons.aberg`, `lastrace123`
+- `alex.van.jager`, `lastrace123`
+- `herman.carlsson`, `lastrace123`
+- `luca.gotti`, `lastrace123`
+- `lebron.james`, `lastrace123`
+- `tintin.sven`, `lastrace123`
 
 ## Use of AI Tools
 Briefly describe whether you used any AI tools (e.g., ChatGPT, GitHub Copilot, Claude) while working on this project, for which purposes (e.g., clarifying concepts, debugging, generating code), and how you verified or adapted their output.

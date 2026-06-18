@@ -7,19 +7,19 @@ ON CONFLICT(name) DO UPDATE SET
   color = excluded.color;
 
 INSERT INTO stations (name, map_x, map_y) VALUES
-  ('Djursholm', 63, 18),
-  ('Taby', 55, 8),
-  ('Bergshamra', 46, 28),
-  ('Lidingo', 82, 34),
-  ('Nacka', 76, 64),
-  ('Gardet', 66, 42),
-  ('Hammarby', 57, 70),
-  ('Solna', 35, 32),
-  ('Sergels torg', 48, 48),
-  ('Kungsholmen', 34, 50),
-  ('Djurgarden', 68, 54),
-  ('Haninge', 62, 90),
-  ('Bro Hof', 12, 22)
+  ('Djursholm', 66, 12),
+  ('Taby', 49, 8),
+  ('Bergshamra', 40, 24),
+  ('Lidingo', 88, 26),
+  ('Nacka', 84, 68),
+  ('Gardet', 68, 40),
+  ('Hammarby', 58, 79),
+  ('Solna', 24, 29),
+  ('Sergels torg', 45, 52),
+  ('Kungsholmen', 20, 49),
+  ('Djurgarden', 74, 53),
+  ('Haninge', 66, 94),
+  ('Bro Hof', 8, 20)
 ON CONFLICT(name) DO UPDATE SET
 
   map_x = excluded.map_x,
