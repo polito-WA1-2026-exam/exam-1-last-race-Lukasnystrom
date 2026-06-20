@@ -84,6 +84,13 @@
   gap: 16px;
 }
 
+.topbar__nav {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.02);
+}
+
 .topbar__identity,
 .topbar__note {
   display: flex;
@@ -91,6 +98,21 @@
   gap: 2px;
   color: var(--text-muted);
   font-size: 0.92rem;
+}
+
+.nav-toggle {
+  min-height: 42px;
+  padding: 0 16px;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-weight: 700;
+}
+
+.nav-toggle--active {
+  background: rgba(139, 92, 246, 0.18);
+  color: var(--text);
 }
 
 .brand {
@@ -176,6 +198,7 @@ p {
   grid-template-columns: 1fr;
 }
 
+.screen--ranking,
 .screen--fallback {
   grid-template-columns: 1fr;
 }
@@ -198,7 +221,8 @@ p {
 
 .panel--auth,
 .panel--event,
-.panel--result-details {
+.panel--result-details,
+.panel--ranking {
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -630,6 +654,64 @@ p {
   color: var(--text-muted);
 }
 
+.ranking-table {
+  display: grid;
+  gap: 10px;
+}
+
+.ranking-table__head,
+.ranking-table__row {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1.6fr) 120px 90px;
+  gap: 16px;
+  align-items: center;
+}
+
+.ranking-table__head {
+  padding: 0 14px 8px;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.ranking-table__body {
+  display: grid;
+  gap: 10px;
+}
+
+.ranking-table__row {
+  padding: 16px 14px;
+  border: 1px solid rgba(168, 131, 255, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.ranking-table__row--current {
+  border-color: rgba(181, 140, 255, 0.42);
+  background: rgba(139, 92, 246, 0.12);
+}
+
+.ranking-table__rank,
+.ranking-table__score,
+.ranking-table__games {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.ranking-table__player {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.ranking-table__player span {
+  color: var(--text-muted);
+}
+
+.ranking-table__score {
+  font-size: 1.12rem;
+}
+
 .panel--map-planning {
   min-height: calc(100vh - 190px);
   display: flex;
@@ -700,10 +782,22 @@ p {
     align-items: start;
   }
 
+  .topbar__actions {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
   .segment-grid,
   .phase-strip,
   .bullet-grid {
     grid-template-columns: 1fr;
+  }
+
+  .ranking-table__head,
+  .ranking-table__row {
+    grid-template-columns: 72px minmax(0, 1fr) 96px 72px;
+    gap: 10px;
   }
 
   .planning-topbar {

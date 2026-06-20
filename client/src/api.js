@@ -61,6 +61,10 @@ export function startGame() {
   });
 }
 
+export function getRanking() {
+  return request("/games/ranking");
+}
+
 export function submitGame(segmentIds) {
   return request("/games/submit", {
     method: "POST",

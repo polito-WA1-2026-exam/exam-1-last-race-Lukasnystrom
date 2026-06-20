@@ -5,6 +5,7 @@ import {
   destroySession,
   getCurrentSession,
   getNetwork,
+  getRanking,
   startGame,
   submitGame,
 } from "./api";
@@ -625,10 +626,68 @@ function ResultView({
   );
 }
 
+function RankingView({ currentUser, rankingEntries }) {
+  return (
+    <main className="screen screen--ranking">
+      <section className="panel panel--ranking">
+        <div className="panel__header">
+          <div>
+            <p className="eyebrow">General ranking</p>
+            <h1>Best results across all players</h1>
+          </div>
+          <p className="muted">
+            Each row shows the best stored score for that player.
+          </p>
+        </div>
+
+        {rankingEntries.length === 0 ? (
+          <div className="empty-state">
+            <strong>No ranked games yet.</strong>
+            <p>Play the first completed round to populate the board.</p>
+          </div>
+        ) : (
+          <div className="ranking-table">
+            <div className="ranking-table__head">
+              <span>Rank</span>
+              <span>Player</span>
+              <span>Best score</span>
+              <span>Games</span>
+            </div>
+
+            <div className="ranking-table__body">
+              {rankingEntries.map((entry, index) => {
+                const isCurrentUser = entry.id === currentUser.id;
+
+                return (
+                  <article
+                    key={entry.id}
+                    className={`ranking-table__row ${
+                      isCurrentUser ? "ranking-table__row--current" : ""
+                    }`}
+                  >
+                    <span className="ranking-table__rank">#{index + 1}</span>
+                    <div className="ranking-table__player">
+                      <strong>{entry.displayName}</strong>
+                      <span>@{entry.username}</span>
+                    </div>
+                    <span className="ranking-table__score">{entry.bestScore}</span>
+                    <span className="ranking-table__games">{entry.gamesPlayed}</span>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </section>
+    </main>
+  );
+}
+
 function App() {
   const [booting, setBooting] = useState(true);
   const [sessionUser, setSessionUser] = useState(null);
   const [network, setNetwork] = useState(null);
+  const [activeSection, setActiveSection] = useState("game");
   const [screen, setScreen] = useState("guest");
   const [busyLabel, setBusyLabel] = useState("");
   const [pageError, setPageError] = useState("");
@@ -640,6 +699,7 @@ function App() {
   const [timeLeftMs, setTimeLeftMs] = useState(0);
   const [submission, setSubmission] = useState(null);
   const [executionIndex, setExecutionIndex] = useState(0);
+  const [rankingEntries, setRankingEntries] = useState([]);
 
   const submitStartedRef = useRef(false);
 
@@ -656,8 +716,10 @@ function App() {
   function moveToGuestState(message = "") {
     setSessionUser(null);
     setNetwork(null);
+    setActiveSection("game");
     setScreen("guest");
     clearRoundState();
+    setRankingEntries([]);
     setLoginForm(EMPTY_LOGIN_FORM);
     setLoginError("");
     setBusyLabel("");
@@ -679,6 +741,7 @@ function App() {
         }
 
         setSessionUser(user);
+        setActiveSection("game");
         setScreen("setup");
 
         const networkData = await getNetwork();
@@ -728,8 +791,10 @@ function App() {
     try {
       const user = await createSession(loginForm);
       setSessionUser(user);
+      setActiveSection("game");
       setScreen("setup");
       clearRoundState();
+      setRankingEntries([]);
 
       const networkData = await getNetwork();
 
@@ -762,6 +827,7 @@ function App() {
   async function handleStartGame() {
     setBusyLabel("Assigning your next route");
     setPageError("");
+    setActiveSection("game");
     clearRoundState();
 
     try {
@@ -799,6 +865,7 @@ function App() {
       const result = await submitGame(selectedSegmentIds);
 
       setSubmission(result);
+      setRankingEntries([]);
       setPlanningDeadline(null);
       setTimeLeftMs(0);
       setBusyLabel("");
@@ -891,9 +958,34 @@ function App() {
 
   function handlePlayAgain() {
     clearRoundState();
+    setActiveSection("game");
     setBusyLabel("");
     setPageError("");
     setScreen("setup");
+  }
+
+  function handleOpenGame() {
+    setActiveSection("game");
+    setPageError("");
+  }
+
+  async function handleOpenRanking() {
+    setBusyLabel("Loading ranking");
+    setPageError("");
+
+    try {
+      const rankingData = await getRanking();
+      setRankingEntries(rankingData);
+      setActiveSection("ranking");
+    } catch (error) {
+      if (error.status === 401) {
+        moveToGuestState("Your session expired. Please sign in again.");
+      } else {
+        setPageError(error.message);
+      }
+    } finally {
+      setBusyLabel("");
+    }
   }
 
   async function handleRetryNetwork() {
@@ -923,6 +1015,8 @@ function App() {
           .filter(Boolean)
       : [];
 
+  const isRoundInProgress = screen === "planning" || screen === "execution";
+
   if (booting) {
     return (
       <div className="app-shell app-shell--loading">
@@ -944,6 +1038,30 @@ function App() {
 
         {sessionUser ? (
           <div className="topbar__actions">
+            <div className="topbar__nav">
+              <button
+                type="button"
+                className={`nav-toggle ${
+                  activeSection === "game" ? "nav-toggle--active" : ""
+                }`}
+                onClick={handleOpenGame}
+                disabled={activeSection === "game" || Boolean(busyLabel)}
+              >
+                Game
+              </button>
+              <button
+                type="button"
+                className={`nav-toggle ${
+                  activeSection === "ranking" ? "nav-toggle--active" : ""
+                }`}
+                onClick={() => {
+                  void handleOpenRanking();
+                }}
+                disabled={isRoundInProgress || Boolean(busyLabel)}
+              >
+                Ranking
+              </button>
+            </div>
             <div className="topbar__identity">
               <span>Signed in as</span>
               <strong>{sessionUser.displayName}</strong>
@@ -975,6 +1093,8 @@ function App() {
           onFieldChange={handleLoginFieldChange}
           onSubmit={handleLoginSubmit}
         />
+      ) : activeSection === "ranking" ? (
+        <RankingView currentUser={sessionUser} rankingEntries={rankingEntries} />
       ) : !network ? (
         <main className="screen screen--fallback">
           <section className="panel panel--auth">

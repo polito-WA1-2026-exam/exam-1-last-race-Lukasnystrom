@@ -13,6 +13,19 @@ const insertCompletedGameStatement = db.prepare(`
   VALUES (?, ?, ?, ?, ?, ?, ?)
 `);
 
+const getRankingStatement = db.prepare(`
+  SELECT
+    users.id,
+    users.username,
+    users.display_name AS displayName,
+    MAX(games.final_score) AS bestScore,
+    COUNT(games.id) AS gamesPlayed
+  FROM games
+  JOIN users ON users.id = games.user_id
+  GROUP BY users.id, users.username, users.display_name
+  ORDER BY bestScore DESC, gamesPlayed DESC, displayName COLLATE NOCASE ASC
+`);
+
 function toSqliteTimestamp(value) {
   return new Date(value).toISOString().slice(0, 19).replace("T", " ");
 }
@@ -37,4 +50,8 @@ export function insertCompletedGame({
   );
 
   return Number(result.lastInsertRowid);
+}
+
+export function getRanking() {
+  return getRankingStatement.all();
 }

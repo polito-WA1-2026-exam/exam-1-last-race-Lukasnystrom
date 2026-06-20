@@ -1,6 +1,6 @@
 import express from "express";
 
-import { insertCompletedGame } from "../dao/games-dao.js";
+import { getRanking, insertCompletedGame } from "../dao/games-dao.js";
 import { requireAuthenticatedUser } from "../middlewares/auth-middleware.js";
 import {
   createGameSetup,
@@ -8,6 +8,10 @@ import {
 } from "../services/game-service.js";
 
 const router = express.Router();
+
+router.get("/ranking", requireAuthenticatedUser, (req, res) => {
+  return res.json(getRanking());
+});
 
 router.post("/", requireAuthenticatedUser, (req, res, next) => {
   try {
