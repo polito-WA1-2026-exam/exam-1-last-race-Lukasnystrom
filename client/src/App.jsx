@@ -316,7 +316,6 @@ function PlanningView({
   isBusy,
   timeLeftMs,
   onAddSegment,
-  onTrimRoute,
   onRemoveLast,
   onResetRoute,
   onSubmitRoute,
@@ -327,132 +326,119 @@ function PlanningView({
 
   return (
     <main className="screen screen--planning">
-      <section className="planning-topbar">
-        <div className="route-pill route-pill--start">
-          <span>Start</span>
-          <strong>{gameSetup.startStation.name}</strong>
-        </div>
-        <div className="route-pill route-pill--destination">
-          <span>Destination</span>
-          <strong>{gameSetup.destinationStation.name}</strong>
-        </div>
-        <div className="timer-card">
-          <span>Time left</span>
-          <strong>{formatCountdown(timeLeftMs)}</strong>
-        </div>
-      </section>
-
-      <section className="panel panel--map">
-        <div className="panel__header">
-          <div>
-            <p className="eyebrow">Planning map</p>
-            <h2>Stations only</h2>
-          </div>
-          <p className="muted">The connections are gone now. Trust your memory.</p>
-        </div>
-        <NetworkMap
-          network={network}
-          revealLines={false}
-          startStationId={gameSetup.startStation.id}
-          destinationStationId={gameSetup.destinationStation.id}
-        />
-      </section>
-
-      <section className="planning-columns">
-        <section className="panel panel--segments">
-          <div className="panel__header">
+      <section className="planning-main">
+        <section className="panel panel--map panel--map-planning">
+          <div className="panel__header panel__header--minimal">
             <div>
-              <p className="eyebrow">Segment bank</p>
-              <h2>Pick connected station pairs</h2>
+              <p className="eyebrow">Planning map</p>
+              <h2>Use the map, then pick pairs on the right</h2>
             </div>
-            <p className="muted">{orderedSegments.length} total segments</p>
           </div>
-
-          <div className="segment-grid">
-            {orderedSegments.map((segment) => {
-              const isSelected = selectedSegmentIds.includes(segment.id);
-
-              return (
-                <button
-                  key={segment.id}
-                  type="button"
-                  className={`segment-chip ${isSelected ? "segment-chip--used" : ""}`}
-                  onClick={() => onAddSegment(segment.id)}
-                  disabled={isSelected || isBusy}
-                >
-                  <span>{getSegmentLabel(segment)}</span>
-                  <small>{isSelected ? "Selected" : "Add"}</small>
-                </button>
-              );
-            })}
-          </div>
+          <NetworkMap
+            network={network}
+            revealLines={false}
+            startStationId={gameSetup.startStation.id}
+            destinationStationId={gameSetup.destinationStation.id}
+          />
         </section>
 
-        <section className="panel panel--route">
-          <div className="panel__header">
-            <div>
-              <p className="eyebrow">Draft route</p>
-              <h2>{selectedRoute.length} chosen segments</h2>
+        <aside className="planning-sidebar">
+          <section className="planning-topbar">
+            <div className="route-pill route-pill--start">
+              <span>Start</span>
+              <strong>{gameSetup.startStation.name}</strong>
             </div>
-            <p className="muted">Order matters. Each pair can be used only once.</p>
-          </div>
+            <div className="route-pill route-pill--destination">
+              <span>Destination</span>
+              <strong>{gameSetup.destinationStation.name}</strong>
+            </div>
+            <div className="timer-card">
+              <span>Time left</span>
+              <strong>{formatCountdown(timeLeftMs)}</strong>
+            </div>
+          </section>
 
-          {selectedRoute.length === 0 ? (
-            <div className="empty-state">
-              <strong>No route yet.</strong>
-              <p>
-                Start selecting pairs from the bank. If time runs out, whatever is
-                here gets submitted.
-              </p>
+          <section className="panel panel--route panel--route-minimal">
+            <div className="panel__header panel__header--minimal">
+              <div>
+                <p className="eyebrow">Draft route</p>
+                <h2>{selectedRoute.length} segments selected</h2>
+              </div>
             </div>
-          ) : (
-            <ol className="route-list">
-              {selectedRoute.map((segment, index) => (
-                <li key={`${segment.id}-${index}`}>
-                  <span className="route-list__index">{index + 1}</span>
-                  <div className="route-list__body">
-                    <strong>{getSegmentLabel(segment)}</strong>
-                  </div>
+
+            {selectedRoute.length === 0 ? (
+              <div className="empty-state">
+                <strong>No route yet.</strong>
+                <p>Select connected station pairs in travel order.</p>
+              </div>
+            ) : (
+              <ol className="route-list route-list--compact">
+                {selectedRoute.map((segment, index) => (
+                  <li key={`${segment.id}-${index}`}>
+                    <span className="route-list__index">{index + 1}</span>
+                    <div className="route-list__body">
+                      <strong>{getSegmentLabel(segment)}</strong>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            )}
+
+            <div className="route-actions route-actions--compact">
+              <button
+                type="button"
+                className="button button--ghost"
+                onClick={onRemoveLast}
+                disabled={selectedRoute.length === 0 || isBusy}
+              >
+                Remove last
+              </button>
+              <button
+                type="button"
+                className="button button--ghost"
+                onClick={onResetRoute}
+                disabled={selectedRoute.length === 0 || isBusy}
+              >
+                Clear
+              </button>
+              <button
+                type="button"
+                className="button button--primary"
+                onClick={onSubmitRoute}
+                disabled={isBusy}
+              >
+                Submit
+              </button>
+            </div>
+          </section>
+
+          <section className="panel panel--segments panel--segments-minimal">
+            <div className="panel__header panel__header--minimal">
+              <div>
+                <p className="eyebrow">Segment bank</p>
+                <h2>{orderedSegments.length} connected pairs</h2>
+              </div>
+            </div>
+
+            <div className="segment-grid segment-grid--compact">
+              {orderedSegments.map((segment) => {
+                const isSelected = selectedSegmentIds.includes(segment.id);
+
+                return (
                   <button
+                    key={segment.id}
                     type="button"
-                    className="button button--ghost button--compact"
-                    onClick={() => onTrimRoute(index)}
-                    disabled={isBusy}
+                    className={`segment-chip ${isSelected ? "segment-chip--used" : ""}`}
+                    onClick={() => onAddSegment(segment.id)}
+                    disabled={isSelected || isBusy}
                   >
-                    Undo to here
+                    <span>{getSegmentLabel(segment)}</span>
                   </button>
-                </li>
-              ))}
-            </ol>
-          )}
-
-          <div className="route-actions">
-            <button
-              type="button"
-              className="button button--ghost"
-              onClick={onRemoveLast}
-              disabled={selectedRoute.length === 0 || isBusy}
-            >
-              Remove last
-            </button>
-            <button
-              type="button"
-              className="button button--ghost"
-              onClick={onResetRoute}
-              disabled={selectedRoute.length === 0 || isBusy}
-            >
-              Clear route
-            </button>
-            <button
-              type="button"
-              className="button button--primary"
-              onClick={onSubmitRoute}
-              disabled={isBusy}
-            >
-              Submit route
-            </button>
-          </div>
-        </section>
+                );
+              })}
+            </div>
+          </section>
+        </aside>
       </section>
     </main>
   );
@@ -880,10 +866,6 @@ function App() {
     });
   }
 
-  function handleTrimRoute(index) {
-    setSelectedSegmentIds((currentSegmentIds) => currentSegmentIds.slice(0, index));
-  }
-
   function handleRemoveLastSegment() {
     setSelectedSegmentIds((currentSegmentIds) => currentSegmentIds.slice(0, -1));
   }
@@ -1028,7 +1010,6 @@ function App() {
           isBusy={Boolean(busyLabel)}
           timeLeftMs={timeLeftMs}
           onAddSegment={handleAddSegment}
-          onTrimRoute={handleTrimRoute}
           onRemoveLast={handleRemoveLastSegment}
           onResetRoute={handleResetRoute}
           onSubmitRoute={() => {
