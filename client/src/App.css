@@ -239,6 +239,24 @@ p {
   margin-bottom: 8px;
 }
 
+.rules-section {
+  display: grid;
+  gap: 12px;
+  padding-top: 4px;
+}
+
+.rules-list {
+  margin: 0;
+  padding-left: 22px;
+  color: var(--text-muted);
+  display: grid;
+  gap: 10px;
+}
+
+.rules-list li::marker {
+  color: var(--accent-strong);
+}
+
 .phase-strip,
 .bullet-grid {
   display: grid;

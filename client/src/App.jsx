@@ -191,24 +191,19 @@ function GuestView({
           Memorize the underground, plan a route from a random starting station to
           a random destination, and survive the ride with as many coins as you can.
         </p>
-        <div className="phase-strip">
-          <div>
-            <strong>1. Setup</strong>
-            <span>Study the full map before the rails disappear.</span>
-          </div>
-          <div>
-            <strong>2. Planning</strong>
-            <span>Build an ordered route within 90 seconds.</span>
-          </div>
-          <div>
-            <strong>3. Execution</strong>
-            <span>Random events change your coins on every segment.</span>
-          </div>
-          <div>
-            <strong>4. Result</strong>
-            <span>Your score never drops below zero.</span>
-          </div>
-        </div>
+        <section className="rules-section" aria-label="Game rules">
+          <p className="eyebrow">How To Play</p>
+          <ul className="rules-list">
+            <li>Study the full map before the rails disappear.</li>
+            <li>Build an ordered route within 90 seconds.</li>
+            <li>Select connected segments in the order you want to travel.</li>
+            <li>The same segment cannot be used twice in one route.</li>
+            <li>You can only change line at interchange stations.</li>
+            <li>Time running out submits the current route automatically.</li>
+            <li>Random events change your coins on every segment.</li>
+            <li>Your final score never drops below zero.</li>
+          </ul>
+        </section>
       </section>
 
       <section className="panel panel--auth">
@@ -264,27 +259,12 @@ function SetupView({ user, network, isBusy, onStartGame }) {
     <main className="screen screen--setup">
       <section className="panel panel--intro">
         <p className="eyebrow">Welcome back, {user.displayName}</p>
-        <h1>Study the whole underground before the countdown begins.</h1>
+        <h1>Ready for the next route?</h1>
         <p className="muted">
-          When you start a round, the client will hide the rails and hand you a
-          random origin plus destination. Build the route from memory and submit
-          it before the timer runs out.
+          Start a round to reveal a random origin and destination. The map will
+          switch into memory mode, and you will need to build the route from
+          station pairs before the timer runs out.
         </p>
-
-        <div className="bullet-grid">
-          <div>
-            <strong>20 starting coins</strong>
-            <span>Every ride begins with the same budget.</span>
-          </div>
-          <div>
-            <strong>90-second planner</strong>
-            <span>Unsubmitted routes are sent automatically at zero.</span>
-          </div>
-          <div>
-            <strong>No segment repeats</strong>
-            <span>Stations may repeat, but pairs cannot.</span>
-          </div>
-        </div>
 
         <button
           type="button"
@@ -635,9 +615,6 @@ function RankingView({ currentUser, rankingEntries }) {
             <p className="eyebrow">General ranking</p>
             <h1>Best results across all players</h1>
           </div>
-          <p className="muted">
-            Each row shows the best stored score for that player.
-          </p>
         </div>
 
         {rankingEntries.length === 0 ? (
@@ -1032,7 +1009,6 @@ function App() {
     <div className="app-shell">
       <header className="topbar">
         <div>
-          <p className="eyebrow">Web Applications I</p>
           <strong className="brand">Last Race</strong>
         </div>
 

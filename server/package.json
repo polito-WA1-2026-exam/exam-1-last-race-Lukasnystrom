@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node index.js",
     "create-db": "node scripts/create-db.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"No automated server tests are configured for this project.\""
   },
   "dependencies": {
     "express": "^5.2.1",
