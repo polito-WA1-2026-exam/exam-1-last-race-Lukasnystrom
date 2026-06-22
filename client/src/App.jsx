@@ -18,10 +18,10 @@ const EMPTY_LOGIN_FORM = {
 };
 
 const STATION_LABEL_LAYOUT = {
-  "Bro Hof": { dx: 0, dy: -4.2, anchor: "middle" },
+  Bro_Hof: { dx: 0, dy: -4.2, anchor: "middle" },
   Solna: { dx: -3.4, dy: -3.8, anchor: "end" },
   Kungsholmen: { dx: -3.6, dy: 4.6, anchor: "end" },
-  "Sergels torg": { dx: 0, dy: -4.2, anchor: "middle" },
+  Sergels_torg: { dx: 0, dy: -4.2, anchor: "middle" },
   Taby: { dx: -1.8, dy: -3.8, anchor: "end" },
   Djursholm: { dx: 3.1, dy: -3.8, anchor: "start" },
   Bergshamra: { dx: -3.6, dy: -3.2, anchor: "end" },
@@ -33,11 +33,19 @@ const STATION_LABEL_LAYOUT = {
   Haninge: { dx: 3.2, dy: -3, anchor: "start" },
 };
 
+function getStationLayoutKey(stationName) {
+  return stationName.replaceAll(" ", "_");
+}
+
 function formatCountdown(timeLeftMs) {
+
   const totalSeconds = Math.max(0, Math.ceil(timeLeftMs / 1000));
+
   const minutes = Math.floor(totalSeconds / 60)
+
     .toString()
     .padStart(2, "0");
+
   const seconds = (totalSeconds % 60).toString().padStart(2, "0");
 
   return `${minutes}:${seconds}`;
@@ -111,13 +119,16 @@ function NetworkMap({
         {network.stations.map((station) => {
           const isStart = station.id === startStationId;
           const isDestination = station.id === destinationStationId;
-          const labelLayout = STATION_LABEL_LAYOUT[station.name] ?? {
+          const labelLayout = STATION_LABEL_LAYOUT[getStationLayoutKey(station.name)] ?? {
+
             dx: station.mapX <= 65 ? 2.8 : -2.8,
             dy: -3,
             anchor: station.mapX <= 65 ? "start" : "end",
+
           };
 
           return (
+
             <g key={station.id}>
               {(isStart || isDestination) && (
                 <circle
@@ -195,13 +206,12 @@ function GuestView({
           <p className="eyebrow">How To Play</p>
           <ul className="rules-list">
             <li>Study the full map before the rails disappear.</li>
-            <li>Build an ordered route within 90 seconds.</li>
+            <li>Build an ordered route with 90 seconds as limit.</li>
             <li>Select connected segments in the order you want to travel.</li>
             <li>The same segment cannot be used twice in one route.</li>
             <li>You can only change line at interchange stations.</li>
             <li>Time running out submits the current route automatically.</li>
             <li>Random events change your coins on every segment.</li>
-            <li>Your final score never drops below zero.</li>
           </ul>
         </section>
       </section>
@@ -398,6 +408,9 @@ function PlanningView({
               <div>
                 <p className="eyebrow">Segment bank</p>
                 <h2>{orderedSegments.length} connected pairs</h2>
+                <p className="muted">
+                  Segments can be traveled in both directions.
+                </p>
               </div>
             </div>
 

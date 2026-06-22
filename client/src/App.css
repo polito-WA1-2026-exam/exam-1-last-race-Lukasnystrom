@@ -449,7 +449,7 @@ p {
 .planning-main {
   display: grid;
   grid-template-columns: minmax(0, 1.55fr) minmax(340px, 420px);
-  gap: 16px;
+  gap: 12px;
   align-items: stretch;
   min-height: calc(100dvh - 126px);
 }
@@ -515,7 +515,7 @@ p {
 
 .segment-grid--compact {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 6px;
+  gap: 8px;
   overflow: visible;
   padding-right: 0;
   align-content: start;
@@ -524,12 +524,12 @@ p {
 .segment-chip {
   text-align: left;
   min-height: 0;
-  padding: 8px 10px;
+  padding: 9px 10px;
   border: 1px solid rgba(168, 131, 255, 0.18);
   background: var(--bg-chip);
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   color: var(--text);
   font-size: 0.88rem;
   line-height: 1.15;
@@ -575,7 +575,7 @@ p {
 
 .route-list--compact {
   gap: 8px;
-  max-height: 148px;
+  max-height: 138px;
   overflow: auto;
   padding-right: 4px;
 }
@@ -592,7 +592,7 @@ p {
   background: linear-gradient(135deg, var(--accent), #5b35bf);
   color: #fbf8ff;
   font-weight: 700;
-  font-size: 0.88rem;
+  font-size: 0.84rem;
 }
 
 .route-list__body {
@@ -745,6 +745,7 @@ p {
 
 .panel--map-planning {
   min-height: 0;
+  min-height: calc(100dvh - 170px);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -756,29 +757,31 @@ p {
 }
 
 .panel--map-planning .network-map svg {
+  display: block;
+  width: 100%;
   height: 100%;
   aspect-ratio: auto;
 }
 
 .panel--route-minimal {
-  padding: 14px;
-  gap: 10px;
+  padding: 12px;
+  gap: 8px;
 }
 
 .panel--segments-minimal {
-  padding: 14px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   min-height: 0;
 }
 
 .route-actions--compact {
-  gap: 8px;
+  gap: 6px;
 }
 
 .route-actions--compact .button {
-  min-height: 38px;
-  padding-inline: 12px;
+  min-height: 34px;
+  padding-inline: 10px;
   flex: 1 1 0;
 }
 
