@@ -53,13 +53,22 @@
 ## Main React Components
 
 - `App` (`client/src/App.jsx`): top-level app state, session handling, game flow, and screen switching.
+
 - `GuestView` (`client/src/App.jsx`): login screen and rule overview for unauthenticated users.
+
 - `SetupView` (`client/src/App.jsx`): pre-game screen where the player studies the full map before starting a round.
+
 - `PlanningView` (`client/src/App.jsx`): route-building screen with the hidden-line map and clickable segment bank.
+
 - `ExecutionView` (`client/src/App.jsx`): step-by-step reveal of the simulated route and random events.
+
 - `ResultView` (`client/src/App.jsx`): final score view and route summary after a round.
+
 - `RankingView` (`client/src/App.jsx`): leaderboard view for the best stored scores.
-- `NetworkMap` (`client/src/App.jsx`): SVG-based map renderer that shows stations, labels, segments, and start/destination markers.
+
+- `NetworkMap` (`client/src/App.jsx`): SVG-based map renderer that shows stations, labels, 
+
+segments, and start/destination markers.
 - `StatusBanner` (`client/src/App.jsx`): reusable message banner for errors and info messages.
 
 (only the main components are listed here; small helper functions are skipped)
